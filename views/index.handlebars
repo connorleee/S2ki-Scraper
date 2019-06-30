@@ -1,0 +1,48 @@
+<div class="container">
+    <div class="jumbotron text-center">
+        <h1>Eat da Burger</h1>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+
+            <h2>What burger masterpiece is on your mind?</h2>
+
+            <form>
+                <div class="form-group">
+                    <textarea class="form-control" id="burgerName" rows="1"></textarea>
+                </div>
+                <button class="btn btn-primary" type="submit" id="burgerInput">Add Burger</button>
+            </form>
+
+        </div>
+    </div>
+ 
+    <hr>
+
+    <div class="row justify-content-between">
+        <div class="col-md-5">
+            {{#each burgers}}
+                {{#unless devoured}}
+                    <h3>
+                        {{burger_name}}
+                        <button class="btn btn-primary float-right devour" data-id="{{id}}" data-devourState="{{devoured}}">DEVOUR!</button>
+                    </h3>
+                {{/unless}}
+            {{/each}}
+        </div>
+
+        <div class="col-md-5">
+            {{#each burgers}}
+                {{#if devoured}}
+                    <h3>
+                        {{burger_name}}
+                        <button class="btn btn-primary float-right delete" data-id="{{this.id}}">REMOVE!</button>
+                    </h3>
+                {{/if}}
+            {{/each}}
+        </div>
+    </div>
+</div>
