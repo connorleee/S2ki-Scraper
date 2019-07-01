@@ -25,10 +25,13 @@ const db = require("./models")
 mongoose.connect("mongodb://localhost/s2kScraper", { useNewUrlParser: true })
 
 // Routes
+app.get("/", (req, res) => {
+    res.send("PLACE HOLDER")
+})
 
 // Scrape route
 app.get("/scrape", (req, res) => {
-    for (let i = 0; i < 1; i++){
+    for (let i = 0; i < 1; i++) {
         axios.get("https://www.s2ki.com/page/" + i).then(response => {
             const $ = cheerio.load(response.data)
 
@@ -36,25 +39,39 @@ app.get("/scrape", (req, res) => {
 
             $("article").each((i, element) => {
                 const title = $(element).find("h3").find("a").text()
-                const summary = $(element).find("section").find("div").find("p").text()
-                const link = $(element).find("h3").find("a").attr("href");
+                const summary = $(element).find("section").find("div").find("p").text().trim()
+                const link = $(element).find("h3").find("a").attr("href")
                 const img = $(element).find("a").find("figure").find("img").attr("src")
+                const date = $(element).find("section").find("div").find("span").text().trim()
 
                 results.push({
                     title: title,
                     summary: summary,
                     link: link,
-                    img: img
+                    img: img,
+                    date: date
                 })
             })
 
             console.log(results)
-            
-            // for (let i = 0; i < results.length; i++) {
-            //     const element = results[i];
-                
-            //     db.Article.insert(element)
-            // }
+
+            for (let i = 0; i < results.length; i++) {
+                const element = results[i];
+
+                db.Article.update(
+                    { "title": element.title },
+                    {
+                        $set: {
+                            "title": element.title,
+                            "summary": element.summary,
+                            "link": element.link,
+                            "img": element.img
+                            // "date": date
+                        }
+                    },
+                    { upsert: true }
+                )
+            }
         })
     }
 })
