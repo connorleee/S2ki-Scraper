@@ -31,7 +31,7 @@ app.get("/", (req, res) => {
 
 // Scrape route
 app.get("/scrape", (req, res) => {
-    for (let i = 0; i < 1; i++) {
+    for (let i = 0; i < 5; i++) {
         axios.get("https://www.s2ki.com/page/" + i).then(response => {
             const $ = cheerio.load(response.data)
 
@@ -42,7 +42,7 @@ app.get("/scrape", (req, res) => {
                 const summary = $(element).find("section").find("div").find("p").text().trim()
                 const link = $(element).find("h3").find("a").attr("href")
                 const img = $(element).find("a").find("figure").find("img").attr("src")
-                
+
                 let dateSliceIndex = $(element).find("section").find("div").find("span").text().trim().indexOf("-")
                 const date = $(element).find("section").find("div").find("span").text().slice(dateSliceIndex + 2).trim()
 
@@ -68,11 +68,15 @@ app.get("/scrape", (req, res) => {
                             "summary": element.summary,
                             "link": element.link,
                             "img": element.img,
-                            "date": date
+                            "date": element.date
                         }
                     },
                     { upsert: true }
-                )
+                ).then(dbArticle => {
+                    console.log(dbArticle)
+                }).catch(err => {
+                    console.log(err)
+                })
             }
         })
     }
