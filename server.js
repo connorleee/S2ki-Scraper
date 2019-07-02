@@ -67,8 +67,8 @@ app.get("/scrape", (req, res) => {
                             "title": element.title,
                             "summary": element.summary,
                             "link": element.link,
-                            "img": element.img
-                            // "date": date
+                            "img": element.img,
+                            "date": date
                         }
                     },
                     { upsert: true }
