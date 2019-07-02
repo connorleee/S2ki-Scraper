@@ -25,6 +25,10 @@ const ArticleSchema = new Schema({
     date: {
         type: String,
         required: true
+    },
+    saved: {
+        type: Boolean,
+        default: false
     }
 })
 

@@ -14,6 +14,7 @@ app.use(logger("dev"))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(express.static("public"))
+app.use(express.static("views"))
 
 const exphbs = require("express-handlebars")
 
@@ -22,13 +23,15 @@ app.set("view engine", "handlebars")
 
 const db = require("./models")
 
-mongoose.connect("mongodb://localhost/s2kScraper", { useNewUrlParser: true })
+let MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/s2kScraper";
+
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 // Routes
 app.get("/", (req, res) => {
     db.Article.find({}).then(dbArticle => {
-        console.log(dbArticle)
-        res.render("index", dbArticle);
+        // console.log(dbArticle)
+        res.render("index", {articles: dbArticle});
     });
 })
 
@@ -39,6 +42,14 @@ app.get("/articles", (req, res) => {
         res.json(err)
     })
 })
+
+// Remaining routes
+    // post to /saved
+    // get /saved
+    // post note to Notes
+    // get note from Notes
+
+app.post("/saved")
 
 // Scrape route
 app.get("/scrape", (req, res) => {

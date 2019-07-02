@@ -1,15 +1,14 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">S2k Scraper</a>
+    <a class="navbar-brand" href="/">S2k Scraper</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
         aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-            <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
-            <a class="nav-item nav-link" href="#">Saved Articles</a>
-            <button type="button" class="btn btn-primary" href="#">Scrape S2ki</button>
-            {{!-- <a class="nav-item nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a> --}}
+            <a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link" href="/saved">Saved Articles</a>
+            <button type="button" class="btn btn-primary" href="/scrape">Scrape S2ki</button>
         </div>
     </div>
 </nav>
@@ -20,33 +19,50 @@
 </div>
 
 <div class="container">
-
-    {{#each article}}
-    <div class="col-md-4">
-        <div class="card" style="width: 18rem">
-            <img src={{img}} class="card-img-top" alt={{title}}>
-            <div class="card-body">
-                <h5 class="card-title">{{ title }}</h5>
-                <p class="card-text">{{date}}</p>
-                <p class="card-text">{{summary}}</p>
-                <a href="#" class="btn btn-primary">Read Full Article</a>
+    <div class="row">
+        {{#each articles}}
+        <div class="col-md-4">
+            <div class="card mb-4" style="width: 18rem">
+                <img src={{img}} class="card-img-top" alt={{title}}>
+                <div class="card-body">
+                    <h5 class="card-title">{{ title }}</h5>
+                    <p class="card-text">{{date}}</p>
+                    <p class="card-text">{{summary}}</p>
+                    <a href={{link}} class="btn btn-primary mb-1">Read Full Article</a>
+                    <button type="button" class="btn btn-primary">Save Article</button>
+                    <button type="button" data-toggle="modal" data-target="#{{_id}}" class="btn btn-primary">Article
+                        Notes</button>
+                </div>
             </div>
         </div>
-    </div>
-    {{/each}}
 
-    <div class="col-md-4">
-        <div class="card" style="width: 18rem">
-            <img src="https://i0.wp.com/www.s2ki.com/wp-content/uploads/2019/06/1-477254.jpg?fit=640%2C360&ssl=1"
-                class="card-img-top" alt="">
-            <div class="card-body">
-                <h5 class="card-title">Immaculate Formula Red AP2 S2000 Has Only 6k Miles</h5>
-                <p class="card-text">June 24, 2019</p>
-                <p class="card-text">Daily Slideshow: Those looking for a “brand new” Honda S2000 certainly can’t do
-                    much better than this rarely used gem.</p>
-                <a href="https://www.s2ki.com/how-tos/slideshows/immaculate-formula-red-ap2-s2000-has-only-6k-miles-588109"
-                    class="btn btn-primary">Read Full Article</a>
+        <!-- Modal -->
+        <div class="modal fade" id="{{_id}}" tabindex="-1" role="dialog" aria-labelledby="{{_id}}Title"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="{{_id}}Title">Notes for article id: {{_id}}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                        <form>
+                            <div class="form-group">
+                                <label for="exampleFormControlTextarea1">Enter Note</label>
+                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            </div>
+                            <button type="button" class="btn btn-primary">Save Note</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
             </div>
         </div>
+        {{/each}}
     </div>
 </div>
