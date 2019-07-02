@@ -42,7 +42,9 @@ app.get("/scrape", (req, res) => {
                 const summary = $(element).find("section").find("div").find("p").text().trim()
                 const link = $(element).find("h3").find("a").attr("href")
                 const img = $(element).find("a").find("figure").find("img").attr("src")
-                const date = $(element).find("section").find("div").find("span").text().trim()
+                
+                let dateSliceIndex = $(element).find("section").find("div").find("span").text().trim().indexOf("-")
+                const date = $(element).find("section").find("div").find("span").text().slice(dateSliceIndex + 2).trim()
 
                 results.push({
                     title: title,
