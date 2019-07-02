@@ -26,7 +26,18 @@ mongoose.connect("mongodb://localhost/s2kScraper", { useNewUrlParser: true })
 
 // Routes
 app.get("/", (req, res) => {
-    res.send("PLACE HOLDER")
+    db.Article.find({}).then(dbArticle => {
+        console.log(dbArticle)
+        res.render("index", dbArticle);
+    });
+})
+
+app.get("/articles", (req, res) => {
+    db.Article.find({}).then(dbArticle => {
+        res.json(dbArticle)
+    }).catch(err => {
+        res.json(err)
+    })
 })
 
 // Scrape route
@@ -55,7 +66,7 @@ app.get("/scrape", (req, res) => {
                 })
             })
 
-            console.log(results)
+            // console.log(results)
 
             for (let i = 0; i < results.length; i++) {
                 const element = results[i];

@@ -1,48 +1,52 @@
-<div class="container">
-    <div class="jumbotron text-center">
-        <h1>Eat da Burger</h1>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">S2k Scraper</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link" href="#">Saved Articles</a>
+            <button type="button" class="btn btn-primary" href="#">Scrape S2ki</button>
+            {{!-- <a class="nav-item nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a> --}}
+        </div>
     </div>
+</nav>
+
+<div class="jumbotron text-center">
+    <h1 class="display-4">S2k Scraper</h1>
+    <p class="lead">Scrape the most recent Honda S2000 articles from S2ki</p>
 </div>
 
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8 text-center">
 
-            <h2>What burger masterpiece is on your mind?</h2>
-
-            <form>
-                <div class="form-group">
-                    <textarea class="form-control" id="burgerName" rows="1"></textarea>
-                </div>
-                <button class="btn btn-primary" type="submit" id="burgerInput">Add Burger</button>
-            </form>
-
+    {{#each article}}
+    <div class="col-md-4">
+        <div class="card" style="width: 18rem">
+            <img src={{img}} class="card-img-top" alt={{title}}>
+            <div class="card-body">
+                <h5 class="card-title">{{ title }}</h5>
+                <p class="card-text">{{date}}</p>
+                <p class="card-text">{{summary}}</p>
+                <a href="#" class="btn btn-primary">Read Full Article</a>
+            </div>
         </div>
     </div>
- 
-    <hr>
+    {{/each}}
 
-    <div class="row justify-content-between">
-        <div class="col-md-5">
-            {{#each burgers}}
-                {{#unless devoured}}
-                    <h3>
-                        {{burger_name}}
-                        <button class="btn btn-primary float-right devour" data-id="{{id}}" data-devourState="{{devoured}}">DEVOUR!</button>
-                    </h3>
-                {{/unless}}
-            {{/each}}
-        </div>
-
-        <div class="col-md-5">
-            {{#each burgers}}
-                {{#if devoured}}
-                    <h3>
-                        {{burger_name}}
-                        <button class="btn btn-primary float-right delete" data-id="{{this.id}}">REMOVE!</button>
-                    </h3>
-                {{/if}}
-            {{/each}}
+    <div class="col-md-4">
+        <div class="card" style="width: 18rem">
+            <img src="https://i0.wp.com/www.s2ki.com/wp-content/uploads/2019/06/1-477254.jpg?fit=640%2C360&ssl=1"
+                class="card-img-top" alt="">
+            <div class="card-body">
+                <h5 class="card-title">Immaculate Formula Red AP2 S2000 Has Only 6k Miles</h5>
+                <p class="card-text">June 24, 2019</p>
+                <p class="card-text">Daily Slideshow: Those looking for a “brand new” Honda S2000 certainly can’t do
+                    much better than this rarely used gem.</p>
+                <a href="https://www.s2ki.com/how-tos/slideshows/immaculate-formula-red-ap2-s2000-has-only-6k-miles-588109"
+                    class="btn btn-primary">Read Full Article</a>
+            </div>
         </div>
     </div>
 </div>
