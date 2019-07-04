@@ -1,7 +1,7 @@
 const express = require("express")
 const mongoose = require("mongoose")
 const logger = require("morgan")
-const path = require("path")
+const moment = require("moment")
 const axios = require("axios")
 const cheerio = require("cheerio")
 
@@ -30,6 +30,13 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 app.get("/", (req, res) => {
     db.Article.find({}).sort({date: -1}).then(dbArticle => {
         // console.log(dbArticle)
+        for (let i = 0; i < dbArticle.length; i++) {
+            const e = dbArticle[i];
+            console.log(e.date)
+            e.date = moment(e.date).format("MMM D, YYYY")
+            console.log(e.date)
+        }
+        
         res.render("index", {articles: dbArticle});
     });
 })
@@ -65,7 +72,10 @@ app.get("/scrape", (req, res) => {
                 const img = $(element).find("a").find("figure").find("img").attr("src")
 
                 let dateSliceIndex = $(element).find("section").find("div").find("span").text().trim().indexOf("-")
-                const date = $(element).find("section").find("div").find("span").text().slice(dateSliceIndex + 2).trim()
+                let date = $(element).find("section").find("div").find("span").text().slice(dateSliceIndex + 2).trim()
+                console.log(date)
+                date = moment(date).format()
+                console.log(date)
 
                 results.push({
                     title: title,
