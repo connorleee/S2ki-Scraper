@@ -14,7 +14,6 @@ app.use(logger("dev"))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(express.static("public"))
-app.use(express.static("views"))
 
 const exphbs = require("express-handlebars")
 
@@ -29,7 +28,7 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 // Routes
 app.get("/", (req, res) => {
-    db.Article.find({}).then(dbArticle => {
+    db.Article.find({}).sort({date: -1}).then(dbArticle => {
         // console.log(dbArticle)
         res.render("index", {articles: dbArticle});
     });
