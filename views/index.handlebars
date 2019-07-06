@@ -51,12 +51,18 @@
                 </button>
             </div>
             <div class="modal-body">
+                {{!-- {{#each comment}}
+                <div>
+
+                </div>
+                {{/each}} --}}
                 <form>
                     <div class="form-group">
-                        <label for="exampleFormControlTextarea1">Enter Note</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <label for="comment{{_id}}">Comment</label>
+                        <textarea class="form-control" id="comment{{_id}}" rows="3"></textarea>
                     </div>
-                    <button type="button" class="btn btn-primary">Submit Comment</button>
+                    <button type="button" class="btn btn-primary submitComment" data-id="{{_id}}">Submit
+                        Comment</button>
                 </form>
             </div>
             <div class="modal-footer">

@@ -70,12 +70,6 @@ app.post("/articles/:id", (req, res) => {
         })
 })
 
-// Remaining routes
-// post to /saved
-// get /saved
-// post note to Notes
-// get note from Notes
-
 app.get("/saved", (req, res) => {
     db.Article.find({ saved: "true" }).sort({ date: -1 }).then(savedArticles => {
         for (let i = 0; i < savedArticles.length; i++) {

@@ -21,4 +21,19 @@ $(() => {
             alert("Article Saved!")
         })
     })
+
+    $(".submitComment").click(function(){
+        let thisId = $(this).attr("data-id")
+
+        $.ajax({
+            method: "POST",
+            url: "/articles/" + thisId,
+            data: {
+                body: $("#comment" + thisId).val()
+            }
+        }).then(data => {
+            console.log(data)
+            $("#comment" + thisId).val("")
+        })
+    })
 })
