@@ -76,7 +76,27 @@ app.post("/articles/:id", (req, res) => {
 // post note to Notes
 // get note from Notes
 
-app.post("/saved")
+app.get("/saved", (req, res) => {
+    db.Article.find({ saved: "true" }).sort({ date: -1 }).then(savedArticles => {
+        for (let i = 0; i < savedArticles.length; i++) {
+            const e = savedArticles[i];
+            e.date = moment(e.date).format("MMM D, YYYY")
+        }
+
+        res.render("index", { articles: savedArticles });
+    });
+})
+
+app.put("/saved/:id", (req, res) => {
+
+    db.Article.updateOne({_id: req.params.id}, {$set: {saved: true}})
+        .then(savedArticle => {
+            console.log(savedArticle)
+        })
+        .catch(err => {
+            res.json(err)
+        })
+})
 
 // Scrape route
 app.get("/scrape", (req, res) => {

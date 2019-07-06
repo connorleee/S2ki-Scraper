@@ -8,4 +8,13 @@ $(() => {
             window.location.reload()
         )
     })
+
+    $(".saveArticle").click(function() {
+        let thisId = $(this).attr("data-id")
+        
+        $.ajax({
+            method: "PUT",
+            url: "/saved/" + thisId
+        })
+    })
 })
