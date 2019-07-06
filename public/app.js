@@ -5,7 +5,9 @@ $(() => {
         $.get({
             url: "/scrape"
         }).then(
-            window.location.reload()
+            setTimeout(() => {
+                window.location.reload()
+            }, 5000) 
         )
     })
 
@@ -15,6 +17,8 @@ $(() => {
         $.ajax({
             method: "PUT",
             url: "/saved/" + thisId
+        }).then(() =>{
+            alert("Article Saved!")
         })
     })
 })
