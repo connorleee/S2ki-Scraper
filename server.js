@@ -28,16 +28,13 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 // Routes
 app.get("/", (req, res) => {
-    db.Article.find({}).sort({date: -1}).then(dbArticle => {
-        // console.log(dbArticle)
+    db.Article.find({}).sort({ date: -1 }).then(dbArticle => {
         for (let i = 0; i < dbArticle.length; i++) {
             const e = dbArticle[i];
-            console.log(e.date)
             e.date = moment(e.date).format("MMM D, YYYY")
-            console.log(e.date)
         }
-        
-        res.render("index", {articles: dbArticle});
+        // console.log(dbArticle)
+        res.render("index", { articles: dbArticle });
     });
 })
 
@@ -49,11 +46,35 @@ app.get("/articles", (req, res) => {
     })
 })
 
+app.get("/articles/:id", (req, res) => {
+    db.Article.find({ _id: req.params.id })
+        .populate("Comment")
+        .then(dbArticle => {
+            res.json(dbArticle)
+        })
+        .catch(err => {
+            res.json(err)
+        })
+})
+
+app.post("/articles/:id", (req, res) => {
+    db.Comment.create(req.body)
+        .then(dbComment => {
+            return db.Article.findOneAndUpdate({ _id: req.params.id }, { comment: dbComment._id }, { new: true })
+        })
+        .then(dbArticle => {
+            res.json(dbArticle)
+        })
+        .catch(err => {
+            res.json(err)
+        })
+})
+
 // Remaining routes
-    // post to /saved
-    // get /saved
-    // post note to Notes
-    // get note from Notes
+// post to /saved
+// get /saved
+// post note to Notes
+// get note from Notes
 
 app.post("/saved")
 
@@ -73,9 +94,7 @@ app.get("/scrape", (req, res) => {
 
                 let dateSliceIndex = $(element).find("section").find("div").find("span").text().trim().indexOf("-")
                 let date = $(element).find("section").find("div").find("span").text().slice(dateSliceIndex + 2).trim()
-                console.log(date)
                 date = moment(date).format()
-                console.log(date)
 
                 results.push({
                     title: title,

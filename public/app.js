@@ -1,11 +1,11 @@
-
+// Waits for page to fully load before runnning any functions
 $(() => {
-    $("#scraper").click(function () {
+
+    $("#scraper").click(() => {
         $.get({
             url: "/scrape"
         }).then(
-            $.get({url: "/"})
+            window.location.reload()
         )
     })
-
 })

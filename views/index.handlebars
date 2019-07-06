@@ -29,40 +29,41 @@
                     <p class="card-text">{{date}}</p>
                     <p class="card-text">{{summary}}</p>
                     <a href={{link}} class="btn btn-primary mb-1">Read Full Article</a>
-                    <button type="button" class="btn btn-primary">Save Article</button>
-                    <button type="button" data-toggle="modal" data-target="#{{_id}}" class="btn btn-primary">Article
+                    <button type="button" class="btn btn-primary" data="{{_id}}">Save Article</button>
+                    <button type="button" data-toggle="modal" data-target="#45" class="btn btn-primary">Article
                         Notes</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Modal -->
-        <div class="modal fade" id="{{_id}}" tabindex="-1" role="dialog" aria-labelledby="{{_id}}Title"
-            aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="{{_id}}Title">Notes for article id: {{_id}}</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        ...
-                        <form>
-                            <div class="form-group">
-                                <label for="exampleFormControlTextarea1">Enter Note</label>
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                            </div>
-                            <button type="button" class="btn btn-primary">Save Note</button>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
                 </div>
             </div>
         </div>
         {{/each}}
     </div>
 </div>
+
+{{#each articles}}
+<!-- Modal -->
+<div class="modal fade" id="45" tabindex="-1" role="dialog" aria-labelledby="Title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="Title">Notes for article id: {{_id}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                hey
+                <form>
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1">Enter Note</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    </div>
+                    <button type="button" class="btn btn-primary">Save Note</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{{/each}}
